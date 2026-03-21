@@ -1,0 +1,26 @@
+﻿a7b391e - 2026-03-17 : feat: further enhance Dashboard UI with refined navigation elements and improved accessibility features
+d64deb6 - 2026-03-17 : feat: enhance Dashboard UI with improved navigation and accessibility features
+4d0ab6d - 2026-03-17 : feat: redesign Dashboard UI with enhanced layout, improved user interactions, and new activity tracking features
+4f1e3c9 - 2026-03-17 : feat: refine Dashboard data fetching with improved caching and streamlined error reporting
+4367b20 - 2026-03-17 : feat: improve Dashboard performance with optimized data fetching and enhanced error handling
+66c8a36 - 2026-03-17 : feat: implement loading indicators and error handling for Dashboard data fetching
+cd47e35 - 2026-03-17 : feat: enhance Dashboard route with dynamic data fetching and loading states
+3925282 - 2026-03-17 : feat: update routing to use IndexPage and add Dashboard route
+d016656 - 2026-03-15 : feat: add GitSolve References tab with public GitHub code search; tabbed layout in FixPreview
+2abba3f - 2026-03-15 : feat(ui): rename AI Explanation to GitSolve Explanation with logo; sync codebase graph to issue file
+aaee705 - 2026-03-15 : feat(ui): add pulse and spring animations to agent timeline component
+78a09e4 - 2026-03-15 : chore: ignore vite config timestamp files
+9277927 - 2026-03-15 : fix(frontend): configure Vite to bind exclusively to 127.0.0.1
+155d689 - 2026-03-15 : Push entire local code folder
+c64ed36 - 2026-03-15 : Fix analysis errors, graph rendering, and regex bug
+b0b07d8 - 2026-03-15 : Add AI Codebase Architecture Map with React Flow visualization
+af9d8c5 - 2026-03-15 : Fix backend analyzer max_tokens truncation
+2980390 - 2026-03-15 : feat: Netlify deployment, redesigned Login, custom Logo, HelpPanel, and env fixes
+9401e7e - 2026-03-14 : feat: complete real-time analysis pipeline using OpenRouter API
+1b2c4ef - 2026-03-14 : Fix CORS, Edge Functions, Error handling, and Github Auth token saving
+f8b61d1 - 2026-03-14 : feat: implement functional settings, notifications, and email login flow for hackathon presentation
+247bd57 - 2026-03-14 : fix: resolve unused variable and missing vite-env TypeScript errors
+a7764fd - 2026-03-14 : feat: add interactive Analytics, Recent Activity tabs and mock alerts to RepoSelector
+62dd451 - 2026-03-14 : feat: build complete GitSolve frontend with 7 pages from Stitch designs
+b278715 - 2026-03-14 : feat: migrate to Groq/Jina API stack and add missing files
+2d0a208 - 2026-03-14 : Initial project structure: Agentic AI GitHub Issue Resolver

@@ -183,17 +183,39 @@ No markdown outside the JSON, no explanations. Make sure it is valid JSON.`
     const content = completion.choices[0]?.message?.content || '{}';
     let parsed: any;
     try {
-      // In case OpenRouter models return markdown blocks, strip them
-      const cleaned = content.replace(/^```json/m, '').replace(/```$/m, '').trim();
+      let cleaned = content;
+      // Extract the JSON block if it's wrapped in triple backticks
+      const match = content.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+      if (match) {
+        cleaned = match[1];
+      }
+      
+      // Fallback: strip any conversational text before the first { or [
+      const firstValidChar = cleaned.search(/[\{\[]/);
+      if (firstValidChar >= 0) {
+        cleaned = cleaned.substring(firstValidChar);
+      }
+      // Also clip trailing garbage after the last } or ]
+      const lastBrace = cleaned.lastIndexOf('}');
+      const lastBracket = cleaned.lastIndexOf(']');
+      const lastValidChar = Math.max(lastBrace, lastBracket);
+      if (lastValidChar >= 0) {
+        cleaned = cleaned.substring(0, lastValidChar + 1);
+      }
+
       try {
         parsed = JSON.parse(cleaned);
       } catch (parseError) {
         // Fallback for truncated JSON response due to output token limits
-        console.warn('JSON parsing failed, attempting to recover truncated response...');
-        const lastBrace = cleaned.lastIndexOf('}');
+        console.warn('JSON parsing failed, attempting to recover truncated response...', cleaned.slice(-50));
         if (lastBrace > 0) {
-           const recovered = cleaned.substring(0, lastBrace + 1) + ']}';
-           parsed = JSON.parse(recovered);
+           const recovered = cleaned + ']}';
+           try {
+             parsed = JSON.parse(recovered);
+           } catch {
+             // If double array closure fails, try single object closure
+             parsed = JSON.parse(cleaned + '}');
+           }
         } else {
            throw parseError;
         }
@@ -214,7 +236,7 @@ No markdown outside the JSON, no explanations. Make sure it is valid JSON.`
         codeSnippet: iss.codeSnippet || '',
       }));
     } catch (parseErr) {
-      console.error('Failed to parse AI response:', parseErr);
+      console.error('Failed to parse AI response. Content was:', content.substring(0, 200) + '...');
       return [];
     }
   } catch (err) {

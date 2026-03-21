@@ -1,18 +1,33 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import netlify from '@netlify/vite-plugin'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
-export default defineConfig({
-  plugins: [react(), netlify()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+export default defineConfig(async () => {
+  const plugins = [react()]
+  try {
+    const netlifyPlugin = await import('@netlify/vite-plugin')
+    if (netlifyPlugin && netlifyPlugin.default) {
+      plugins.push(netlifyPlugin.default())
+    }
+  } catch (e) {
+    console.error('Failed to load netlify plugin', e)
+  }
+
+  return {
+    plugins,
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+      },
     },
-  },
-  server: {
-    host: '127.0.0.1',
-    port: 5173,
-    strictPort: true
+    server: {
+      host: '127.0.0.1',
+      port: 5173,
+      strictPort: true
+    }
   }
 })

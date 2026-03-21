@@ -10,11 +10,12 @@ fetch(url, {
 })
   .then(response => response.json())
   .then(data => {
-    console.log("Graph Nodes:", data.graph?.nodes?.length);
-    console.log("Graph Edges:", data.graph?.edges?.length);
-    console.log("Reasoning Path length:", data.graph?.reasoning_path?.length);
-    if(data.graph) {
-         console.log(JSON.stringify(data.graph.nodes, null, 2));
+    console.log("Issues Detected:", data.issues?.length);
+    console.log("Metrics:", JSON.stringify(data.metrics, null, 2));
+    if(data.issues && data.issues.length === 0) {
+        console.log("Raw Response Data:", JSON.stringify(data, null, 2));
+    } else {
+        console.log(JSON.stringify(data.issues, null, 2));
     }
   })
   .catch((error) => console.error('Error:', error));
