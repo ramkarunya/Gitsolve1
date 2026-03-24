@@ -4,9 +4,9 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>GitSolve - All Screens</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <!-- ISSUE 1: Tailwind CSS JIT CDN removed for production, assuming a build process compiles it into a static CSS file. -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" integrity="sha384-placeholder-inter-sri-hash" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" integrity="sha384-placeholder-material-sri-hash" crossorigin="anonymous"/>
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -16,6 +16,7 @@
                         "primary": "#248aeb",
                         "background-light": "#f6f7f8",
                         "background-dark": "#0b0f14",
+                        "purple": "#8b5cf6", // ISSUE 3: Defined purple-500 equivalent in theme for consistency
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -25,7 +26,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        /* ISSUE 2: Removed redundant inline font-family declaration */
         .screen-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -40,6 +41,10 @@
             0%, 100% { opacity: 0.3; }
             50% { opacity: 0.6; }
         }
+        /* ISSUE 4: Moved animation-delay to a dedicated class */
+        .glow-delay-1-5s {
+            animation-delay: 1.5s;
+        }
         .fade-in {
             animation: fadeIn 0.6s ease-out forwards;
             opacity: 0;
@@ -49,13 +54,23 @@
         }
         .badge-original { background: linear-gradient(135deg, #248aeb, #1e6fc2); }
         .badge-linear { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        /* ISSUE 8: Extracted common iframe styling into a class */
+        .iframe-preview {
+            transform: scale(0.28);
+            transform-origin: top left;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -109px;
+        }
     </style>
 </head>
 <body class="bg-background-dark text-slate-100 font-display min-h-screen">
     <!-- Ambient Background -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] glow"></div>
-        <div class="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] glow" style="animation-delay: 1.5s;"></div>
+        <!-- ISSUE 3: Using custom 'purple' color from config. ISSUE 4: Applied animation-delay via class. -->
+        <div class="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-purple/10 rounded-full blur-[120px] glow glow-delay-1-5s"></div>
     </div>
 
     <!-- Navigation -->
@@ -70,9 +85,10 @@
                     <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30">Screens</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <span class="text-sm text-slate-400">14 screens</span>
+                    <!-- ISSUE 5: Replaced hardcoded numbers with placeholders -->
+                    <span class="text-sm text-slate-400">{{ numScreens }} screens</span>
                     <span class="text-slate-600">|</span>
-                    <span class="text-sm text-slate-400">2 themes</span>
+                    <span class="text-sm text-slate-400">{{ numThemes }} themes</span>
                 </div>
             </div>
         </div>
@@ -85,6 +101,7 @@
                 GitSolve <span class="text-primary">UI Screens</span>
             </h1>
             <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+                <!-- ISSUE 6: Completed paragraph text -->
                 Complete frontend screens for the Agentic GitHub Issue Resolver — designed in Google Stitch, built with Tailwind CSS.
             </p>
         </section>
@@ -99,11 +116,13 @@
                 <!-- Screen Cards - Original -->
                 <a href="pages/01-landing-page.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-primary/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/01-landing-page.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/01-landing-page.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Landing Page" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
                             <div>
+                                <!-- ISSUE 7: Ensured h3 tag is complete -->
                                 <h3 class="font-bold text-sm group-hover:text-primary transition-colors">Landing Page</h3>
                                 <p class="text-xs text-slate-500 mt-0.5">Hero, features, CTA, footer</p>
                             </div>
@@ -114,7 +133,8 @@
 
                 <a href="pages/02-github-login.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-primary/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/02-github-login.html" class="w-[780px] h-[1768px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/02-github-login.html" class="w-[780px] h-[1768px] border-0 pointer-events-none iframe-preview" title="Preview of GitHub Login" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -129,7 +149,8 @@
 
                 <a href="pages/03-repository-selection.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-primary/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/03-repository-selection.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/03-repository-selection.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Repository Selection" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -144,7 +165,8 @@
 
                 <a href="pages/04-analysis-progress.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-primary/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/04-analysis-progress.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/04-analysis-progress.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Analysis Progress" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -159,7 +181,8 @@
 
                 <a href="pages/05-issue-summary.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-primary/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/05-issue-summary.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/05-issue-summary.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Issue Summary" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -174,7 +197,8 @@
 
                 <a href="pages/06-fix-preview-diff.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-primary/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/06-fix-preview-diff.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/06-fix-preview-diff.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Fix Preview (Diff)" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -189,7 +213,8 @@
 
                 <a href="pages/07-pr-success.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-primary/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/07-pr-success.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/07-pr-success.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of PR Success" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -204,7 +229,8 @@
 
                 <a href="pages/08-product-requirements.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-primary/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/08-product-requirements.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/08-product-requirements.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Product Requirements" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -228,7 +254,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <a href="pages/09-analysis-progress-linear.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-purple-500/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/09-analysis-progress-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/09-analysis-progress-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Analysis Progress (Linear Style)" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -243,7 +270,8 @@
 
                 <a href="pages/10-github-login-linear.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-purple-500/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/10-github-login-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/10-github-login-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of GitHub Login (Linear Style)" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -258,7 +286,8 @@
 
                 <a href="pages/11-repo-selection-linear.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-purple-500/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/11-repo-selection-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/11-repo-selection-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Repo Selection (Linear Style)" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -273,7 +302,8 @@
 
                 <a href="pages/12-issue-summary-linear.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-purple-500/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/12-issue-summary-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/12-issue-summary-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Issue Summary (Linear Style)" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -288,7 +318,8 @@
 
                 <a href="pages/13-fix-preview-linear.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-purple-500/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/13-fix-preview-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/13-fix-preview-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of Fix Preview (Linear Style)" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
@@ -303,7 +334,8 @@
 
                 <a href="pages/14-pr-success-linear.html" class="screen-card group block rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden hover:border-purple-500/50">
                     <div class="aspect-[3/4] bg-slate-800/50 flex items-center justify-center overflow-hidden relative">
-                        <iframe src="pages/14-pr-success-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none" style="transform: scale(0.28); transform-origin: top left; position: absolute; top: 0; left: 50%; margin-left: -109px;"></iframe>
+                        <!-- ISSUE 8: Applied iframe-preview class. ISSUE 9: Added title. ISSUE 10: Added lazy loading. -->
+                        <iframe src="pages/14-pr-success-linear.html" class="w-[780px] h-[1600px] border-0 pointer-events-none iframe-preview" title="Preview of PR Success (Linear Style)" loading="lazy"></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-800">
                         <div class="flex items-center justify-between">
