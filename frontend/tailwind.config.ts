@@ -5,7 +5,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#248aeb',
         'background-dark': '#111921',
         'background-light': '#f6f7f8',
         brand: {
@@ -14,16 +13,18 @@ export default {
           600: '#1e6fc2',
           900: '#0b0f14',
         },
+        primary: ({ theme }) => theme('colors.brand.500'),
       },
       fontFamily: {
         display: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       borderRadius: {
-        DEFAULT: '0.125rem',
-        lg: '0.25rem',
-        xl: '0.5rem',
-        full: '0.75rem',
+        DEFAULT: '0.25rem',
+        xs: '0.125rem',
+        lg: '0.5rem',
+        xl: '0.75rem',
+        'r-12px': '0.75rem',
       },
       keyframes: {
         'pulse-ring': {
